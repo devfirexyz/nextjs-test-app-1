@@ -1,5 +1,6 @@
 import type {Market} from "@/lib/market-data";
 import {MarketIcon} from "./MarketIcon";
+import {TradeControls} from "@/components/auth/TradeControls";
 
 type MarketCardProps = Readonly<{
     market: Market;
@@ -38,15 +39,8 @@ export function MarketCard({market}: MarketCardProps) {
                 ))}
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-2">
-                <div className="rounded-md bg-emerald-500/20 py-2 text-center text-sm font-bold text-emerald-400">
-                    Yes
-                </div>
-                <div className="rounded-md bg-red-500/20 py-2 text-center text-sm font-bold text-red-400">
-                    No
-                </div>
-            </div>
-
+            <TradeControls marketId={market.id}/>
+            
             <div className="mt-4 flex items-center justify-between text-xs text-[#8795a1]">
                 <span>{market.volume}</span>
                 <span>{market.cadence}</span>

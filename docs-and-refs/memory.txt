@@ -112,3 +112,20 @@ Step 3.1:
 - Define users, roles, permissions, and mock token generation.
 - No UI, no localStorage, no sockets yet.
 - Purpose is to separate authentication identity from authorization permissions before adding client state.
+
+Step 3.2:
+- Add AuthSwitcher as the first intentional Client Component boundary.
+- It owns browser-only localStorage and role switching.
+- Keep DashboardHeader as a Server Component that renders AuthSwitcher as a child.
+- AuthSwitcher does not yet control trading behavior; that comes in the next auth step.
+
+Step 3.2 correction:
+- ESLint flagged setState inside useEffect in AuthSwitcher.
+- Replace useState/useEffect localStorage hydration with useSyncExternalStore.
+- This models localStorage as an external store and avoids cascading render lint warnings.
+
+Step 3.3:
+- Add authorization-aware trade controls as a small Client Component.
+- TradeControls reads the current mock user from the same localStorage-backed external store.
+- Guest sees disabled trade affordance; trader/admin see active visual controls.
+- No real trade mutation yet and no socket yet.

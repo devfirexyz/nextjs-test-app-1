@@ -1,3 +1,6 @@
+import {AuthSwitcher} from "@/components/auth/AuthSwitcher";
+
+
 const navItems = [
     "Trending",
     "Breaking",
@@ -27,19 +30,21 @@ export function DashboardHeader() {
                     <span>Polymarket</span>
                 </div>
 
-                <div className="hidden h-10 flex-1 items-center rounded-lg bg-[#1b232b] px-4 text-sm text-[#82909d] md:flex">
+                <div
+                    className="hidden h-10 flex-1 items-center rounded-lg bg-[#1b232b] px-4 text-sm text-[#82909d] md:flex">
                     Search polymarkets...
                     <span className="ml-auto">/</span>
                 </div>
 
                 <div className="ml-auto flex items-center gap-3 text-sm">
-          <span className="hidden font-semibold text-[#1d9bf0] md:inline">
-            How it works
-          </span>
+                    <span className="hidden font-semibold text-[#1d9bf0] md:inline">
+                        How it works
+                    </span>
                     <span className="hidden md:inline">Log In</span>
                     <div className="rounded-md bg-[#1d9bf0] px-4 py-2 font-semibold text-white">
                         Sign Up
                     </div>
+                    <AuthSwitcher/>
                     <div className="text-2xl leading-none">≡</div>
                 </div>
             </div>

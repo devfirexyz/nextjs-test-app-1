@@ -55,4 +55,4 @@ export function parseMockToken(token: string) {
     return user ?? null
 }
 
-export const defaultMockerUser = mockUsers[1]
+export const defaultMockUser = mockUsers[1]
