@@ -1,27 +1,19 @@
-"use client";
+import { DashboardHeader } from "@/components/market-dashboard/DashboardHeader";
+import { FeaturedMarketCard } from "@/components/market-dashboard/FeaturedMarketCard";
+import type { MarketDashboard } from "@/lib/market-data";
 
-import { useEffect } from "react";
-import ProductItem from "./ProductItem";
-import { getProductById } from "@/server";
+type ProductPanelProps = Readonly<{
+    dashboard: MarketDashboard;
+}>;
 
-export default function ProductPanel({ products }) {
-  let intervalId: ReturnType<typeof setInterval>;
-  useEffect(() => {
-    intervalId = setInterval(async () => {
-      //call the products api
+export function ProductPanel({ dashboard }: ProductPanelProps) {
+    return (
+        <div className="min-h-screen bg-[#11171d] text-white">
+            <DashboardHeader />
 
-      const res = await getProductById(1);
-
-      console.log({ a: res });
-    }, 1000);
-  }, []);
-  return (
-    <div className="p-4 mt-4">
-      <h3>Live product update</h3>
-
-      {products.map((product) => (
-        <ProductItem productItem={product} key={product.id} />
-      ))}
-    </div>
-  );
+            <main className="px-6 py-6">
+                <FeaturedMarketCard market={dashboard.featuredMarket} />
+            </main>
+        </div>
+    );
 }

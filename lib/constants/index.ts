@@ -1,0 +1,1 @@
+export const SHORT_POLLING_TIMEOUT_IN_MS = 60 * 1000;

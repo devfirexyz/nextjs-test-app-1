@@ -1,0 +1,89 @@
+see i have attached a reference for revamping my producst page with this [dashboard.png](docs-and-refs/dashboard.png) , this is a polymarket website, i also want to build the same page of this dashboard, let me give you more context, on why i want to build this dashboard, bascially i have interview with a company which also launching the same product as polymarket but in south asia, starting from indonesia, so now for round 2 its a frontend case study system design round, which will included these topics, Design Led architecture, web performance, websocket, auth and authorization
+
+so with this revamp i want to solid my internals and understanding on websockets, auth and authorization , primarly and web performance, design led architecture secondarily
+
+So i want you to help me do this, you will act as my instrcutor, you will explain me each and every concept and provide me full code , and help me in writing all the code, you will not do any execution , i will handle all the execution
+
+---
+
+Progress log - 2026-05-05
+
+Current agreed approach:
+- Move one step at a time. Do not dump the whole implementation at once.
+- User wants to learn the concepts, not just receive finished code.
+- Assistant should provide lesson + focused code for the current step only.
+- User will apply code and run commands locally.
+- Assistant can review code/errors after the user applies changes.
+
+Product goal:
+- Replicate the Polymarket dashboard reference as closely as practical because time is short.
+- Do not redefine the product/brand or create a new South Asia variant yet.
+- Main route target is /products.
+
+Interview prep priorities:
+1. WebSockets and real-time market updates.
+2. Auth and authorization.
+3. Web performance.
+4. Design-led frontend architecture.
+
+Architecture decision:
+- Keep package.json dev script as "next dev".
+- Keep package.json socket script as "node socket.js".
+- Next dev server should run on localhost:3000.
+- Socket.IO realtime server should run separately on localhost:3001.
+- This is clearer for learning: HTTP initial render and WebSocket live updates are separate systems.
+
+Planned learning/build sequence:
+1. Architecture picture and mental model.
+2. Static Polymarket-like dashboard UI using mock market data.
+3. Mock auth layer.
+4. Local Socket.IO server on port 3001.
+5. Connect dashboard to live updates.
+6. Interview explanation and review.
+
+Current status:
+- Step 1 architecture reset is complete.
+- Next step is Step 2: build only the static dashboard UI.
+- No auth, no socket client, no live updates in Step 2.
+
+Step 2 started:
+- Goal is a static Polymarket-like /products dashboard.
+- This step should not include auth, Socket.IO client code, polling, or live updates.
+- Keep package.json scripts unchanged.
+- Keep socket.js unchanged for now.
+- Use typed mock market data so later WebSocket updates can target stable market/outcome ids.
+
+Step 2 reset after review:
+- Use nextjs, next-best-practices, nextjs-best-practices, frontend-design, and web performance guidance for this step.
+- websocket-engineer is relevant to the project but deferred until the Socket.IO step.
+- ProductPanel should remain a Server Component in Step 2 because there is no useState, useEffect, browser API, or event handler yet.
+- app/(products)/page.tsx must be deleted, not redirected, because route groups do not affect URL paths and that file maps to /.
+- Static dashboard code should avoid invalid/fragile Tailwind classes and reserve stable dimensions to reduce layout shift.
+
+Step 2 architecture correction:
+- Add React skills: react:components and vercel-react-best-practices.
+- Use a Next Route Handler to model the mock backend API: app/api/markets/route.ts.
+- Do not have the Server Component fetch its own API route over HTTP; instead share a server-side data function between the route handler and the page.
+- This teaches the API boundary without adding avoidable internal HTTP overhead or a server-side waterfall.
+- Static UI should be split into modular React components with typed Readonly props.
+
+Review checkpoint:
+- User kept app/api/markets/route.ts for later use. This is okay as an optional API boundary.
+- Current blocker: app/(products)/products/page.tsx passes dashboard to ProductPanel, but ProductPanel still expects products and maps products.
+- Current Step 2 correction needed: ProductPanel should stop being a Client Component for now, remove polling/useEffect/server action import, and accept typed dashboard props.
+
+Step 2.1:
+- Replace ProductPanel with a minimal typed Server Component smoke test.
+- ProductPanel receives Readonly<{ dashboard: MarketDashboard }>.
+- Remove "use client", polling, useEffect, ProductItem, and getProductById from ProductPanel.
+- Expected result: /products renders static market cards from getMarketDashboard().
+
+Step 2.2:
+- Next layer is static dashboard shell/header/navigation.
+- Keep everything as Server Components.
+- Start modularizing UI under components/market-dashboard/ so later auth and socket client boundaries can be introduced surgically.
+
+Step 2.3:
+- Add FeaturedMarketCard as a typed Server Component.
+- This replaces the smoke-test featured section with a Polymarket-like hero card.
+- Still no client components, buttons with handlers, auth, or sockets.
