@@ -129,3 +129,18 @@ Step 3.3:
 - TradeControls reads the current mock user from the same localStorage-backed external store.
 - Guest sees disabled trade affordance; trader/admin see active visual controls.
 - No real trade mutation yet and no socket yet.
+
+Step 3.4:
+- Add local mock trade feedback inside TradeControls.
+- This is not a real mutation and does not touch server/socket.
+- Purpose is to demonstrate authorization gating and user feedback before adding backend behavior.
+
+Clarification:
+- Auth is not using sockets in Step 3.
+- Current auth is localStorage + useSyncExternalStore + permission checks.
+- Sockets later will only authenticate the connection handshake; they are not the auth system.
+
+Step 3.5:
+- Add a mock trade Route Handler with server-side authorization.
+- This uses HTTP POST, not sockets.
+- Client-side permission checks are UX only; route handler enforces permission.
