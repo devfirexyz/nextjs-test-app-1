@@ -87,3 +87,28 @@ Step 2.3:
 - Add FeaturedMarketCard as a typed Server Component.
 - This replaces the smoke-test featured section with a Polymarket-like hero card.
 - Still no client components, buttons with handlers, auth, or sockets.
+
+Step 2.4:
+- Add MarketSidebar as a typed Server Component for breaking news and hot topics.
+- ProductPanel layout becomes two-column on xl screens: main featured content plus sidebar.
+- Still no client components or realtime behavior.
+
+Step 2.5:
+- Add AllMarketsSection and MarketCard as typed Server Components.
+- Use non-interactive visual controls for tabs and Yes/No pills because trading/auth behavior comes later.
+- Keep stable card dimensions and clipped titles for layout stability.
+
+Step 2.6:
+- Static dashboard implementation should now be complete enough for review.
+- Before moving to auth, user should run dev/lint/typecheck and visually inspect /products.
+- Next phase after review is Step 3: mock auth with a small Client Component boundary.
+
+Step 2 completed:
+- User confirmed everything is fine.
+- Proceeding to Step 3.
+
+Step 3.1:
+- Build mock auth model only.
+- Define users, roles, permissions, and mock token generation.
+- No UI, no localStorage, no sockets yet.
+- Purpose is to separate authentication identity from authorization permissions before adding client state.
