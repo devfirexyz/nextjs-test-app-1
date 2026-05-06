@@ -144,3 +144,27 @@ Step 3.5:
 - Add a mock trade Route Handler with server-side authorization.
 - This uses HTTP POST, not sockets.
 - Client-side permission checks are UX only; route handler enforces permission.
+
+Step 3.6:
+- User observed broad list re-rendering when placing a trade.
+- Optimize the auth hook snapshot: useSyncExternalStore should return a stable primitive userId, not a newly parsed user object.
+- Derive the user from mockUsers after reading the primitive snapshot.
+- Memoize TradeControls so local trade state only affects the clicked control.
+
+Time-crunch pivot before interview:
+- Auth is good enough conceptually: identity -> role -> permission -> client UX + server enforcement.
+- Remaining auth cleanup: derive mock token from selected user, and remove/type old ProductItem for typecheck.
+- Prioritize WebSocket implementation now because user missed it in prior round.
+- WebSocket goal: separate Socket.IO server on localhost:3001, auth handshake, market rooms, periodic market:update events, client reconnects and applies deltas.
+
+Step 4 implementation target:
+- Replace socket.js with standalone Socket.IO server on port 3001.
+- Add LiveMarketsClient as a focused Client Component for live probabilities.
+- ProductPanel remains mostly Server Component: header + sidebar server-rendered, live market area client-rendered.
+- Client connects with mock token, joins market rooms, receives snapshot/update events, and merges outcome probabilities by id.
+
+Step 4 debug checkpoint:
+- Hydration warning appeared in MarketMiniChart because render-time chart point generation used Math.sin/floating-point values that can differ between server and browser.
+- Fix: make chart points deterministic with a fixed integer wave pattern.
+- Socket status showed "Authentication required", meaning the Socket.IO server rejected the handshake.
+- Fix: ensure socket server is restarted on port 3001, use getToken() from useMockAuth, and log/verify token during handshake if needed.

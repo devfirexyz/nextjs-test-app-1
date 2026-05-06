@@ -1,6 +1,6 @@
 "use client";
 
-import {useSyncExternalStore} from "react";
+import {useMemo, useSyncExternalStore} from "react";
 import {
     createMockToken,
     defaultMockUser,
@@ -8,33 +8,16 @@ import {
     type MockUser,
 } from "@/lib/mock-auth";
 
-const USER_STORAGE_KEY = "prediction_market_mock_user";
+const USER_ID_STORAGE_KEY = "prediction_market_mock_user_id";
 const TOKEN_STORAGE_KEY = "prediction_market_mock_token";
 const AUTH_CHANGED_EVENT = "prediction-market-auth-changed";
 
-function readStoredUser(): MockUser {
+function readStoredUserId() {
     if (typeof window === "undefined") {
-        return defaultMockUser;
+        return defaultMockUser.id;
     }
 
-    const storedUser = window.localStorage.getItem(USER_STORAGE_KEY);
-
-    if (!storedUser) {
-        return defaultMockUser;
-    }
-
-    try {
-        const parsedUser = JSON.parse(storedUser) as MockUser;
-
-        return (
-            mockUsers.find(
-                (mockUser) =>
-                    mockUser.id === parsedUser.id && mockUser.role === parsedUser.role
-            ) ?? defaultMockUser
-        );
-    } catch {
-        return defaultMockUser;
-    }
+    return window.localStorage.getItem(USER_ID_STORAGE_KEY) ?? defaultMockUser.id;
 }
 
 function subscribeToAuthChanges(callback: () => void) {
@@ -48,28 +31,37 @@ function subscribeToAuthChanges(callback: () => void) {
 }
 
 function getServerSnapshot() {
-    return defaultMockUser;
+    return defaultMockUser.id;
+}
+
+function findUserById(userId: string): MockUser {
+    return mockUsers.find((mockUser) => mockUser.id === userId) ?? defaultMockUser;
 }
 
 export function useMockAuth() {
-    const user = useSyncExternalStore(
+    const userId = useSyncExternalStore(
         subscribeToAuthChanges,
-        readStoredUser,
+        readStoredUserId,
         getServerSnapshot
     );
 
-    function setUser(userId: string) {
-        const nextUser = mockUsers.find((mockUser) => mockUser.id === userId);
+    const user = useMemo(() => findUserById(userId), [userId]);
 
-        if (!nextUser) return;
+    function setUser(nextUserId: string) {
+        const nextUser = findUserById(nextUserId);
 
-        window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(nextUser));
+        window.localStorage.setItem(USER_ID_STORAGE_KEY, nextUser.id);
         window.localStorage.setItem(TOKEN_STORAGE_KEY, createMockToken(nextUser));
         window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
+    }
+
+    function getToken() {
+        return createMockToken(user);
     }
 
     return {
         user,
         setUser,
+        getToken,
     };
 }
