@@ -1,4 +1,5 @@
 import {AuthSwitcher} from "@/components/auth/AuthSwitcher";
+import {brand} from "@/lib/brand";
 
 
 const navItems = [
@@ -25,14 +26,14 @@ export function DashboardHeader() {
             <div className="flex h-16 items-center gap-5 px-6">
                 <div className="flex items-center gap-3 text-xl font-bold">
                     <div className="flex h-8 w-8 items-center justify-center border border-white/80 text-xs">
-                        PM
+                        {brand.shortName}
                     </div>
-                    <span>Polymarket</span>
+                    <span>{brand.name}</span>
                 </div>
 
                 <div
                     className="hidden h-10 flex-1 items-center rounded-lg bg-[#1b232b] px-4 text-sm text-[#82909d] md:flex">
-                    Search polymarkets...
+                    {brand.searchPlaceholder}
                     <span className="ml-auto">/</span>
                 </div>
 
