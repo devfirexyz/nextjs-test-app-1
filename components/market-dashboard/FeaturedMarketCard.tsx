@@ -1,18 +1,18 @@
-import type { Market } from "@/lib/market-data";
-import { MarketIcon } from "./MarketIcon";
-import { MarketMiniChart } from "./MarketMiniChart";
+import type {Market} from "@/lib/market-data";
+import {MarketIcon} from "./MarketIcon";
+import {MarketMiniChart} from "./MarketMiniChart";
 
 type FeaturedMarketCardProps = Readonly<{
     market: Market;
 }>;
 
-export function FeaturedMarketCard({ market }: FeaturedMarketCardProps) {
+export function FeaturedMarketCard({market}: FeaturedMarketCardProps) {
     return (
         <section className="rounded-2xl border border-[#27313a] bg-[#151c22] p-5 shadow-2xl shadow-black/20">
             <div className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
                 <div>
                     <div className="mb-4 flex items-center gap-4">
-                        <MarketIcon icon={market.icon} />
+                        <MarketIcon icon={market.icon}/>
                         <div className="text-sm font-semibold text-[#82909d]">
                             {market.category} · {market.cadence}
                         </div>
@@ -45,7 +45,7 @@ export function FeaturedMarketCard({ market }: FeaturedMarketCardProps) {
                             <span key={outcome.id} className="flex items-center gap-2">
                 <span
                     className="h-2 w-2 rounded-full"
-                    style={{ backgroundColor: outcome.color }}
+                    style={{backgroundColor: outcome.color}}
                 />
                                 {outcome.label} {outcome.probability}%
               </span>
@@ -53,12 +53,12 @@ export function FeaturedMarketCard({ market }: FeaturedMarketCardProps) {
                     </div>
 
                     <div className="h-[260px]">
-                        <MarketMiniChart outcomes={market.outcomes} />
+                        <MarketMiniChart outcomes={market.outcomes}/>
                     </div>
 
                     <div className="mt-4 flex items-center justify-between text-sm text-[#82909d]">
                         <span>{market.cadence}</span>
-                        <span>Polymarket</span>
+                        <span>Augora</span>
                     </div>
                 </div>
             </div>

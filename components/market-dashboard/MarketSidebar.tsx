@@ -1,15 +1,15 @@
-import type { HotTopic, NewsMarket } from "@/lib/market-data";
+import type {HotTopic, NewsMarket} from "@/lib/market-data";
 
 type MarketSidebarProps = Readonly<{
     breakingNews: NewsMarket[];
     hotTopics: HotTopic[];
 }>;
 
-export function MarketSidebar({ breakingNews, hotTopics }: MarketSidebarProps) {
+export function MarketSidebar({breakingNews, hotTopics}: MarketSidebarProps) {
     return (
         <aside className="space-y-8">
             <section>
-                <h2 className="mb-4 text-xl font-bold underline">Breaking news</h2>
+                <h2 className="mb-4 text-xl font-bold underline">Breaking markets</h2>
 
                 <div className="space-y-5">
                     {breakingNews.map((item, index) => (

@@ -7,16 +7,19 @@ type AllMarketsSectionProps = Readonly<{
 
 const tabs = [
     "All",
-    "Trump",
-    "Iran",
-    "UK Elections",
-    "Musk v Altman",
-    "Oil",
-    "Strait of Hormuz",
-    "Bitcoin",
-];
+    "Economy",
+    "Weather",
+    "Technology",
+    "Politics",
+    "Crypto",
+    "Sports",
+    "Culture",
+    "Geopolitics",
+    "Companies",
+]
 
-export function AllMarketsSection({ markets }: AllMarketsSectionProps) {
+
+export function AllMarketsSection({markets}: AllMarketsSectionProps) {
     return (
         <section className="mt-8">
             <div className="flex items-center justify-between">
@@ -39,7 +42,7 @@ export function AllMarketsSection({ markets }: AllMarketsSectionProps) {
 
             <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {markets.map((market) => (
-                    <MarketCard key={market.id} market={market} />
+                    <MarketCard key={market.id} market={market}/>
                 ))}
             </div>
         </section>
